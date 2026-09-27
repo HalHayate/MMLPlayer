@@ -22,7 +22,8 @@ MUSIC.COMとの互換性を目指した実装ですが、すべての楽曲・�
 Windows環境で、以下を用意してください。
 
 - Visual Studioの「C++によるデスクトップ開発」（MSVC、Windows SDK）。
-- CMake 3.20以降とNinja（Visual StudioのCMakeツールも使用できます）。
+- CMake 3.20以降とNinja（下記のプリセットを使う場合はCMake 3.25以降）。
+  Visual StudioのCMakeツールも使用できます。
 - C++17に対応したコンパイラー。
 
 ### コマンドライン版
@@ -39,8 +40,8 @@ cmake --build out/build/cli
 
 ### KbMedia Playerプラグイン
 
-KbMedia Player SDKの `kmp_pi.h` を `Materials/kpisdk/` に配置し、
-`MMLPLAYER_BUILD_KPI=ON` でビルドします。SDKはこのプロジェクトに同梱していません。
+KbMedia Player SDKの `kmp_pi.h` は `kpi/kpisdk/` を参照します。
+`MMLPLAYER_BUILD_KPI=ON` でビルドします。
 
 ```bat
 cmake -S . -B out/build/kpi -G Ninja -DCMAKE_BUILD_TYPE=Release -DMMLPLAYER_BUILD_KPI=ON
@@ -51,6 +52,30 @@ cmake --build out/build/kpi
 使用するKbMedia Player本体とビット数を合わせてください。
 32 bit版を作る場合はx86用の開発者コマンドプロンプトと別のビルドフォルダーを使用します。
 プラグインの音源実装はfmgenです。SDKを再配布する場合はSDK側の配布条件も確認してください。
+
+### Visual Studioで32 bit版をビルドする
+
+プロジェクトのフォルダーを開き、構成から `x86-Release` または `x86-Debug` を選択してビルドします。
+各プリセットはNinjaを使用し、Visual Studioが対象のビット数に合うMSVC環境を準備します。
+Visual Studio 2022専用のビルドツール（v143）には固定していません。
+
+以前の設定で構成済みの場合、最初の切り替え時にCMakeの「キャッシュの削除と再構成」を実行してください。
+古いVisual StudioジェネレーターのキャッシュをNinjaへそのまま引き継ぐことはできません。
+
+コマンドラインでは、**x86 Native Tools Command Prompt** を開いて実行します。
+
+```bat
+cmake --preset x86-Release --fresh
+cmake --build --preset x86-Release
+```
+
+`out/build/x86-Release/` に `MMLPlayer.exe`、`MMLPlayer.kpi`、`KpiSelfTest.exe` が生成されます。
+Debug版は両方のコマンドで `x86-Debug` を指定してください。
+`--fresh` は古いCMakeキャッシュを作り直すための指定で、通常の再ビルドでは省略できます。
+プラグインが不要なら、構成時に `-DMMLPLAYER_BUILD_KPI=OFF` を追加してください。
+
+コマンドラインのCMake自体はプリセットの `architecture` に従ってMSVC環境を切り替えません。
+32 bit版はx86用、64 bit版（`x64-Release` / `x64-Debug`）はx64用の開発者コマンドプロンプトを使用してください。
 
 ## 使い方
 
@@ -87,11 +112,11 @@ out\build\cli\MMLPlayer.exe --opna=ymfm song.mml
 ### S98録音・WAV変換
 
 ```bat
-out\build\cli\MMLPlayer.exe --record-s98 song.s98 song.mml
+out\build\cli\MMLPlayer.exe --opna=ymfm --record-s98 song.s98 song.mml
 out\build\cli\MMLPlayer.exe --play-s98 song.s98 --out song_s98.wav
 ```
 
-`--record-s98` は録音のみを行います。WAVも同時に出力する場合は `--render` を併用してください。
+`--record-s98` には `--opna=ymfm` が必要です。録音のみを行い、WAVも同時に出力する場合は `--render` を併用してください。
 `--play-s98` はymfmでWAVを生成します。任意の音源構成やすべてのS98仕様への対応を意図したものではありません。
 
 ### 効果音・Dパート
@@ -102,6 +127,7 @@ out\build\cli\MMLPlayer.exe --play-effect 0 --sound-dat path\to\SOUND.DAT
 ```
 
 効果音番号は `0`～`63` です。
+`--play-effect` は効果音をWAVへ出力します（既定名は `mine_effect_番号.wav`）。
 Dパートを使う楽曲では、パス指定がなければMMLと同じフォルダー、次に `Materials/SOUND.DAT` を探します。
 KPIプラグインではMMLと同じフォルダーを探します。
 

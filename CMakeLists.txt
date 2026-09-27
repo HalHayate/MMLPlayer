@@ -147,7 +147,7 @@ if(MMLPLAYER_BUILD_KPI AND WIN32)
 	target_include_directories(MMLPlayerKpi PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}
 		# kmp_pi.h (KbMedia SDK ヘッダ)。プラグインターゲット限定で参照する。
-		${CMAKE_CURRENT_SOURCE_DIR}/Materials/kpisdk
+		${CMAKE_CURRENT_SOURCE_DIR}/kpi/kpisdk
 	)
 	# 出力名を <name>.kpi に (KbMedia プラグインの拡張子。PREFIX 無しで lib を付けない)。
 	set_target_properties(MMLPlayerKpi PROPERTIES
@@ -159,6 +159,6 @@ if(MMLPLAYER_BUILD_KPI AND WIN32)
 	# KbMedia 本体なしで Open/Render/Close を回す自動 end-to-end テスト。
 	add_executable(KpiSelfTest kpi/KpiSelfTest.cpp)
 	target_include_directories(KpiSelfTest PRIVATE
-		${CMAKE_CURRENT_SOURCE_DIR}/Materials/kpisdk
+		${CMAKE_CURRENT_SOURCE_DIR}/kpi/kpisdk
 	)
 endif()
