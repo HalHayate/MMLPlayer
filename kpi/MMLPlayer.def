@@ -1,0 +1,5 @@
+; KbMedia Player plugin export.
+; WINAPI (__stdcall) decorates the name to _kmp_GetTestModule@0 on x86, which the
+; host cannot find. The .def forces the undecorated name (harmless on x64).
+EXPORTS
+    kmp_GetTestModule

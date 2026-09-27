@@ -1,3 +1,26 @@
+MMLPlayer licensing
+===================
+
+The MIT License below applies to the original code and documentation authored
+for MMLPlayer by HalHayate. Third-party code, including modified copies, remains
+subject to its respective license and is not relicensed under this MIT License.
+
+The bundled third-party components are:
+
+* ymfm (Aaron Giles; np21w rev101 version): BSD 3-Clause License.
+  See audio/synth/ymfm/LICENSE.txt.
+* fmgen (cisc; np21w rev101 version): custom license, including a requirement
+  to distribute as freeware and obtain the author's prior agreement for
+  incorporation into commercial software (including shareware).
+  See audio/synth/fmgen/fmgen_readme.txt, which must be retained unchanged.
+* opngen / psggen (NP2 developer team; np21w rev101 version): modified BSD
+  license. See audio/synth/opngen/LICENSE.txt.
+
+See THIRD_PARTY_NOTICES.md for the applicable files, upstream attribution,
+modification records, and notices to include with source and binary releases.
+The current executable and KPI plugin include fmgen; selecting a different
+sound backend at runtime does not remove its code or its license conditions.
+
 MIT License
 
 Copyright (c) 2026 HalHayate
@@ -19,3 +42,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+

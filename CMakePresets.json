@@ -1,0 +1,85 @@
+{
+	"version": 6,
+	"configurePresets": [
+		{
+			"name": "x64-Debug",
+			"displayName": "x64 Debug (MSVC)",
+			"generator": "Ninja",
+			"binaryDir": "${sourceDir}/out/build/${presetName}",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug"
+			},
+			"vendor": {
+				"microsoft.com/VisualStudioSettings/CMake/1.0": {
+					"hostOS": [ "Windows" ],
+					"intelliSenseMode": "windows-msvc-x64"
+				}
+			}
+		},
+		{
+			"name": "x64-Release",
+			"displayName": "x64 Release (MSVC)",
+			"generator": "Ninja",
+			"binaryDir": "${sourceDir}/out/build/${presetName}",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release"
+			},
+			"vendor": {
+				"microsoft.com/VisualStudioSettings/CMake/1.0": {
+					"hostOS": [ "Windows" ],
+					"intelliSenseMode": "windows-msvc-x64"
+				}
+			}
+		},
+		{
+			"name": "x86-Debug",
+			"displayName": "x86 Debug (MSVC, 32bit KbMedia)",
+			"generator": "Visual Studio 17 2022",
+			"architecture": { "value": "Win32", "strategy": "set" },
+			"binaryDir": "${sourceDir}/out/build/${presetName}",
+			"vendor": {
+				"microsoft.com/VisualStudioSettings/CMake/1.0": {
+					"hostOS": [ "Windows" ],
+					"intelliSenseMode": "windows-msvc-x86"
+				}
+			}
+		},
+		{
+			"name": "x86-Release",
+			"displayName": "x86 Release (MSVC, 32bit KbMedia)",
+			"generator": "Visual Studio 17 2022",
+			"architecture": { "value": "Win32", "strategy": "set" },
+			"binaryDir": "${sourceDir}/out/build/${presetName}",
+			"vendor": {
+				"microsoft.com/VisualStudioSettings/CMake/1.0": {
+					"hostOS": [ "Windows" ],
+					"intelliSenseMode": "windows-msvc-x86"
+				}
+			}
+		}
+	],
+	"buildPresets": [
+		{
+			"name": "x64-Debug",
+			"displayName": "x64 Debug (MSVC)",
+			"configurePreset": "x64-Debug"
+		},
+		{
+			"name": "x64-Release",
+			"displayName": "x64 Release (MSVC)",
+			"configurePreset": "x64-Release"
+		},
+		{
+			"name": "x86-Debug",
+			"displayName": "x86 Debug (MSVC, 32bit KbMedia)",
+			"configurePreset": "x86-Debug",
+			"configuration": "Debug"
+		},
+		{
+			"name": "x86-Release",
+			"displayName": "x86 Release (MSVC, 32bit KbMedia)",
+			"configurePreset": "x86-Release",
+			"configuration": "Release"
+		}
+	]
+}
